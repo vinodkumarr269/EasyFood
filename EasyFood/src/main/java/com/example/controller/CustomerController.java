@@ -111,10 +111,10 @@ public class CustomerController {
 	@GetMapping("/createdb")
 	@ResponseBody
 	public String createDatabase() throws SQLException {
-		String url="jdbc:postgresql://localhost:5432/check";
+		String url="postgres://deygcapsnshnnm:171e8df35fabdea0ba7eac1b75ab67c4a86a41e12fe00df4ded20a165d48efbd@ec2-54-235-116-235.compute-1.amazonaws.com:5432/d6npk83h14joaf";
 		String driver ="org.postgresql.Driver";
-		String user="postgres";
-		String password = "root";
+		String user="deygcapsnshnnm";
+		String password = "171e8df35fabdea0ba7eac1b75ab67c4a86a41e12fe00df4ded20a165d48efbd";
 		String query="CREATE TABLE customerdemo (\r\n" + 
 				"  cno   serial, \r\n" + 
 				"  username varchar(45) ,\r\n" + 
