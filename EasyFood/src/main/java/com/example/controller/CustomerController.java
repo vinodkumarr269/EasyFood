@@ -1,6 +1,12 @@
 package com.example.controller;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.model.Customer;
 import com.example.service.CustomerService;
 import com.example.service.HotelService;
+
+import net.bytebuddy.asm.Advice.Return;
 
 @Controller
 public class CustomerController {
@@ -100,5 +108,30 @@ public class CustomerController {
 		hotelService.deleteAllHotels();
 		return "Hotels Deleted";
 	}
-
+	@GetMapping("/createdb")
+	@ResponseBody
+	public String createDatabase() throws SQLException {
+		String url="jdbc:postgresql://localhost:5432/check";
+		String driver ="org.postgresql.Driver";
+		String user="postgres";
+		String password = "root";
+		String query="CREATE TABLE customerdemo (\r\n" + 
+				"  cno   serial, \r\n" + 
+				"  username varchar(45) ,\r\n" + 
+				"  firstname varchar(45),\r\n" + 
+				"  lastname varchar(45) ,\r\n" + 
+				"  mobileno varchar(45) ,\r\n" + 
+				"  password varchar(45) \r\n" + 
+				");";
+		try {
+			Class.forName(driver);
+			Connection con=DriverManager.getConnection(url,user,password);
+			Statement st = con.createStatement();
+			ResultSet rs=st.executeQuery(query);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "dbCreated";
+	}
 }
