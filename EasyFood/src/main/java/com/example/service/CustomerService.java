@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
@@ -43,11 +44,13 @@ public class CustomerService {
 
 	public String checkPassword(String password) {
 		String status = null;
-		Pattern digitCasePatten = Pattern.compile("[0-9 ]");
-		Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-		Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
-		Pattern lowerCasePatten = Pattern.compile("[a-z ]");
-		if (password.length() > 8) {
+		String regex = "^(?=.*[0-9])"
+                + "(?=.*[a-z])(?=.*[A-Z])"
+                + "(?=.*[@#$%^&+=])"
+                + "(?=\\S+$).{8,20}$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(password); 
+		if (password.length() >= 8 && m.matches()) {
 			status = "success";
 		} else {
 			status = "fail";

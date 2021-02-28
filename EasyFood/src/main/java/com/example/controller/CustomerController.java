@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.model.Customer;
+import com.example.service.AddressService;
 import com.example.service.CustomerService;
 import com.example.service.HotelService;
 
@@ -33,6 +34,8 @@ public class CustomerController {
 	CustomerService customerService;
 	@Autowired
 	HotelService hotelService;
+	@Autowired
+	AddressService addressService;
 	ModelAndView model= new ModelAndView();
 	@GetMapping("/")
 	public ModelAndView startPage() {
@@ -71,10 +74,12 @@ public class CustomerController {
 			model.setViewName("start");
 		}
 		else if(status.equals("usernameExisting")) {
+			model.clear();
 			model.setViewName("registerCustomer");
 			model.addObject("x1",1);
 		}
 		else if(status.equals("passwordNotMatching")) {
+			model.clear();
 			model.setViewName("registerCustomer");
 			model.addObject("x2",2);
 		}
@@ -108,30 +113,11 @@ public class CustomerController {
 		hotelService.deleteAllHotels();
 		return "Hotels Deleted";
 	}
-	@GetMapping("/createdb")
+	@GetMapping("/deleteAllAddresses")
 	@ResponseBody
-	public String createDatabase() throws SQLException {
-		String url="postgres://deygcapsnshnnm:171e8df35fabdea0ba7eac1b75ab67c4a86a41e12fe00df4ded20a165d48efbd@ec2-54-235-116-235.compute-1.amazonaws.com:5432/d6npk83h14joaf";
-		String driver ="org.postgresql.Driver";
-		String user="deygcapsnshnnm";
-		String password = "171e8df35fabdea0ba7eac1b75ab67c4a86a41e12fe00df4ded20a165d48efbd";
-		String query="CREATE TABLE customerdemo (\r\n" + 
-				"  cno   serial, \r\n" + 
-				"  username varchar(45) ,\r\n" + 
-				"  firstname varchar(45),\r\n" + 
-				"  lastname varchar(45) ,\r\n" + 
-				"  mobileno varchar(45) ,\r\n" + 
-				"  password varchar(45) \r\n" + 
-				");";
-		try {
-			Class.forName(driver);
-			Connection con=DriverManager.getConnection(url,user,password);
-			Statement st = con.createStatement();
-			ResultSet rs=st.executeQuery(query);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "dbCreated";
+	public String DeleteAllAddresses() {
+		addressService.deleteAllAddresses();
+		return "Addresses Deleted";
 	}
+	
 }

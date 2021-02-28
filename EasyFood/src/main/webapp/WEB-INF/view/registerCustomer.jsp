@@ -78,7 +78,12 @@ body {
 					<c:set var="err" value="${x2}"></c:set>
 					<c:if test="${err == 2 }">
 					<div>
-							<p style="color: red">length should Match</p>
+							<p style="color: red">Password should meet Following criteria
+							* length Should be 8 or more
+							* Should contain one small Alphabet
+							* Should contain one small Alphabet
+							* Should contain one Special Character
+							</p>
 						</div>
 					</c:if>
 					<button type="submit" class="btn btn-primary btn-block">Submit</button>
