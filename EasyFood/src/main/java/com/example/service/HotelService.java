@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,6 +31,19 @@ public class HotelService {
 	}
 	public void deleteAllHotels() {
 		hotelRepository.deleteAll();
+	}
+	public Hotel getHotelByHotelNo(int hno) {
+		return hotelRepository.findByHno(hno);
+	}
+	public List<Hotel> findAllByHotelname(String hotelname) {
+		List<Hotel> hotels = new ArrayList<Hotel>();
+		for (Hotel hotel : hotelRepository.findAllByHotelname(hotelname)) {
+			hotels.add(hotel);
+		}
+		return hotels;
+	}
+	public Hotel findByHno(int hno) {
+		 return	hotelRepository.findByHno(hno);
 	}
 	
 

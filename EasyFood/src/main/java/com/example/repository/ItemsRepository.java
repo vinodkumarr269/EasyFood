@@ -11,4 +11,6 @@ import com.example.model.Items;
 public interface ItemsRepository extends CrudRepository<Items, Integer> {
 
 	List<Items> findAllByHno(int hno);
+
+	public List<Items> findAllByItemname(String hotelname);
 }

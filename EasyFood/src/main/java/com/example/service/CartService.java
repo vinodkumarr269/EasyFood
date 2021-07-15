@@ -51,4 +51,9 @@ public class CartService {
 		return hno;
 	}
 
+	public void deleteCartByUserName(String username) {
+		cartRepository.deleteByUsername(username);
+		
+	}
+
 }

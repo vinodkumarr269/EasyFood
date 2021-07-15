@@ -17,22 +17,33 @@ public class Cart {
 	private int ino;
 	private String itemname;
 	private int price;
+	private int userno;
 	
+	public int getUserno() {
+		return userno;
+	}
+
+	public void setUserno(int userno) {
+		this.userno = userno;
+	}
+
 	public Cart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Cart(String username, int hno, int ino, String itemname, int price) {
+
+
+	
+	public Cart(String username, int hno, int ino, String itemname, int price, int userno) {
 		super();
 		this.username = username;
 		this.hno = hno;
 		this.ino = ino;
 		this.itemname = itemname;
 		this.price = price;
+		this.userno = userno;
 	}
-
-
 
 	public int getCno() {
 		return cno;

@@ -10,10 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	
-<!DOCTYPE html>
-<html>
-<head>
+	<head>
 <style type="text/css">
 .form-container {
 	position: absolute;
@@ -86,7 +83,5 @@ body {
 		</section>
 	</section>
 
-</body>
-</html>
 </body>
 </html>

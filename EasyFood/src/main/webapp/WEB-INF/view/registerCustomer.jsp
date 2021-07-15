@@ -80,8 +80,8 @@ body {
 					<div>
 							<p style="color: red">Password should meet Following criteria
 							* length Should be 8 or more
-							* Should contain one small Alphabet
-							* Should contain one small Alphabet
+							* Should contain one Capital Letter
+							* Should contain one Small Letter
 							* Should contain one Special Character
 							</p>
 						</div>

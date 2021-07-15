@@ -36,10 +36,15 @@ body {
 	<section class="container-fluid ">
 		<section class="row justify-content-center">
 			<section class="col-12 col-sn-6 col-md-3">
-				<form class="form-container" method="post" action="login-customer">
+				<form class="form-container" method="get" action="update-password">
 					<div class="form-group">
 						<label for="exampleInputEmail1">User Name</label> <input
 							type="text" class="form-control" name="username"
+							id="exampleInputEmail1" aria-describedby="emailHelp">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Update Password</label> <input
+							type="text" class="form-control" name="updatepassword"
 							id="exampleInputEmail1" aria-describedby="emailHelp">
 					</div>
 					<c:set var="err" value="${error}"></c:set>
@@ -48,14 +53,6 @@ body {
 							<p style="color: red">invalid user name or password</p>
 						</div>
 					</c:if>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label> <input
-							type="password" class="form-control" name="password"
-							id="exampleInputPassword1">
-					</div>
-					<div class="form-group">
-						  <a href="/forgotpassword"/>Forgot Password
-					</div>
 					<button type="submit" class="btn btn-primary btn-block">Submit</button>
 
 				</form>

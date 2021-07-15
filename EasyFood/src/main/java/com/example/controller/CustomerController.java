@@ -71,7 +71,9 @@ public class CustomerController {
 		String status=null;
 		status=customerService.registerCustomer(customer);
 		if(status.equals("complete")) {
+			model.addObject("x3",3);
 			model.setViewName("start");
+
 		}
 		else if(status.equals("usernameExisting")) {
 			model.clear();
@@ -118,6 +120,35 @@ public class CustomerController {
 	public String DeleteAllAddresses() {
 		addressService.deleteAllAddresses();
 		return "Addresses Deleted";
+	}
+	@GetMapping("/forgotpassword")
+	public ModelAndView forgotPassword() {
+		model.setViewName("changePassword");
+		return model;
+	}
+	@PostMapping("/change-password")
+	public ModelAndView changePassword(@RequestParam String username,@RequestParam String mobileno) {
+		
+		Customer c =customerService.findByUsername(username);
+		if(c != null) {
+		if(c.getMobileno().equals(mobileno)) {
+			model.setViewName("updatePassword");
+		}else {
+			model.clear();
+			model.addObject("notmatching",400);
+			model.setViewName("changePassword");
+		}
+		}else {
+			model.clear();
+			model.addObject("nouserfound",404);
+			model.setViewName("changePassword");
+		}
+		return model;
+	}
+	@GetMapping("/update-password")
+	public ModelAndView updatePassword1(@RequestParam String updatepassword,@RequestParam String username) {
+	 customerService.updatePasswordOfUser(updatepassword,username);
+		return model;
 	}
 	
 }

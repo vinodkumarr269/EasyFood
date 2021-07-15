@@ -27,6 +27,12 @@ public class ItemsService {
 		}
 		return itemsList;
 	}
-	
+	public List<Items> findAllByItems(String hotelname) {
+		List<Items> items=new ArrayList<Items>();
+		for (Items item : itemsRepository.findAllByItemname(hotelname)) {
+			items.add(item);
+		}
+		return items;
+	}
 
 }

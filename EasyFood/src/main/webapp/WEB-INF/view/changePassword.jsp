@@ -36,26 +36,29 @@ body {
 	<section class="container-fluid ">
 		<section class="row justify-content-center">
 			<section class="col-12 col-sn-6 col-md-3">
-				<form class="form-container" method="post" action="login-customer">
+				<form class="form-container" method="post" action="change-password">
 					<div class="form-group">
 						<label for="exampleInputEmail1">User Name</label> <input
 							type="text" class="form-control" name="username"
 							id="exampleInputEmail1" aria-describedby="emailHelp">
 					</div>
-					<c:set var="err" value="${error}"></c:set>
-					<c:if test="${err == 500 }">
-						<div>
-							<p style="color: red">invalid user name or password</p>
-						</div>
-					</c:if>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label> <input
-							type="password" class="form-control" name="password"
+						<label for="exampleInputPassword1">Mobile Number</label> <input
+							type="password" class="form-control" name="mobileno"
 							id="exampleInputPassword1">
 					</div>
-					<div class="form-group">
-						  <a href="/forgotpassword"/>Forgot Password
-					</div>
+					<c:set var="err" value="${notmatching}"></c:set>
+					<c:if test="${err == 400 }">
+						<div>
+							<p style="color: red">please Contact Administrator (+917731897510) or try again</p>
+						</div>
+					</c:if>
+					<c:set var="err" value="${nouserfound}"></c:set>
+					<c:if test="${err == 404 }">
+						<div>
+							<p style="color: red">No Username Found</p>
+						</div>
+					</c:if>
 					<button type="submit" class="btn btn-primary btn-block">Submit</button>
 
 				</form>

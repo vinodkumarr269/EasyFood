@@ -52,6 +52,44 @@
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>Welcome</title>
@@ -60,25 +98,25 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
+<h2>Hello ${username}</h2>
+<br>
+	<form  class="example" action="searchbyhotelnameoritem">
+  <input type="text" placeholder="Search By Hotel Name or Item Name" name="hotelname">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+	<br>
 	<div role="navigation">
 		<div class="navbar navbar-inverse">
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<a href="displayAllHotels" class="navbar-brand">Show All Hotels</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="displayCart" class="navbar-brand">View Cart</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="diplayOffers" class="navbar-brand">View Offers</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="diplayOrderHistory" class="navbar-brand">View History</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<ul class="nav navbar-nav ">
+					<a href="displayAllHotels" class="navbar-brand active">Show All Hotels &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+					<a href="displayCart" class="navbar-brand">View Cart &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+					<a href="diplayOffers" class="navbar-brand">View Offers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+					<a href="displayOrderHistory" class="navbar-brand">View History &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 					<a href="/account" class="navbar-brand">Account</a>
-					<div class="dropdown">
-						<button class="dropbtn">
-							Dropdown <i class="fa fa-caret-down"></i>
-						</button>
-						<div class="dropdown-content">
-							<a href="#">Log Out</a> <a href="#">Linksdcsdc 2</a> <a
-								href="#">Linsdsdcsdk 3</a>
-						</div>
-					</div>
 				</ul>
 			</div>
 		</div>

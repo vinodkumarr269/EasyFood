@@ -34,9 +34,29 @@ public class OrderService {
 		}
 		return sum;
 	}
-	public void saveOrder(Order order) {
-		orderRepository.save(order);
+	public void saveOrder(List<Order> order) {
+		orderRepository.saveAll(order);
 
 	}
+	public int getLastOrderNumber() {
+		return orderRepository.getLastOrderNo();	
+	}
 
+	public List<Order> findCountOfOrders() {
+		List<Order> order = new ArrayList<Order>();
+		for(Order o: orderRepository.findAll()) {
+			order.add(o);
+		}
+		return order;
+	}
+
+	public List<Order> findByOrderNumber(int eachordernumber) {
+		List<Order> order = new ArrayList<Order>();
+		for(Order o: orderRepository.findAllByOrderno(eachordernumber)) {
+			order.add(o);
+		}
+		return order;
+	}
+
+	
 }

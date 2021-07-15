@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,11 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.model.Address;
 import com.example.model.Cart;
+import com.example.model.Customer;
 import com.example.model.Hotel;
 import com.example.model.Items;
 import com.example.model.Order;
 import com.example.service.AddressService;
 import com.example.service.CartService;
+import com.example.service.CustomerService;
 import com.example.service.HotelService;
 import com.example.service.ItemsService;
 import com.example.service.OrderService;
@@ -42,6 +46,8 @@ public class HotelController {
 	AddressService addressService;
 	@Autowired
 	OrderService orderService;
+	@Autowired
+	CustomerService customerService;
 	ModelAndView model = new ModelAndView();
 
 	@GetMapping("/addHotelByAdmin")
@@ -103,8 +109,9 @@ public class HotelController {
 			@RequestParam int price, HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("user");
-		
-		Cart cart = new Cart(username, hno, ino, itemname, price);
+		Customer customerDetails = customerService.findByUsername(username);
+		int customerNo = customerDetails.getCno();
+		Cart cart = new Cart(username, hno, ino, itemname, price,customerNo);
 		cartService.addToCart(cart);
 		model.setViewName("getitems");
 		return model;
@@ -207,8 +214,6 @@ public class HotelController {
 		int total = cartService.findTotalCartValue(cart);
 		int count = orderService.findAllOrderstByUsername(username).size();
 		int totalPrice = orderService.calculateOfferValue(coupon, count, total);
-		Order order = new Order(username, totalPrice);
-		orderService.saveOrder(order);
     	model.addObject("sum", totalPrice);
 		model.setViewName("totalpricepage");
 		return model;
@@ -244,13 +249,90 @@ public class HotelController {
 	}
 	@GetMapping("/payments")
 	public ModelAndView openPaymentsPage() {
+		
 		model.setViewName("paymentspage");
 		return model;
 	}
 
 	@GetMapping("/orderplace")
-	@ResponseBody
-	public String status() {
-		return "Order Placed Successfully";
+	public ModelAndView status(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("user");
+		List<Cart> cartItems = cartService.getAllCartItems(username);
+		int totalprice = cartService.findTotalCartValue(cartItems);
+		int orderno;
+		if(orderService.findCountOfOrders().size() == 0) {
+			 orderno = 1;
+		}else {
+			 orderno = (orderService.getLastOrderNumber())+1;
+		}
+		List<Order> orderlist = new ArrayList<Order>();
+		for(Cart cart:cartItems){
+			int userNo = cart.getUserno();
+			String itemname = cart.getItemname();
+			int price = cart.getPrice();
+			int hno = cart.getHno();
+			Hotel hotelDetails = hotelService.getHotelByHotelNo(hno);
+			String hotelname = hotelDetails.getHotelname();
+		   Order order = new Order(username, totalprice, itemname, price, hotelname,orderno);
+		  orderlist.add(order);
+		}
+		orderService.saveOrder(orderlist);
+		cartService.deleteCartByUserName(username);
+		model.setViewName("final");
+		return model;
 	}
-}
+	@GetMapping("/displayOrderHistory")
+	public ModelAndView displayOrderHistory(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("user");
+		List<Order> orderlist = orderService.findAllOrderstByUsername(username);
+		List<Integer> orderno = new ArrayList<Integer>();		
+		for(Order order:orderlist) {
+			int ordernumber= order.getOrderno();
+			orderno.add(ordernumber);
+		}
+//		Set<Integer> set = new HashSet<>(orderno);
+//		orderno.clear();
+//		orderno.addAll(set);
+		int eachordernumber;
+		List<Order> orderlistbyorderno = new ArrayList<Order>();
+		for(int i=0;i<orderno.size();i++) {
+			eachordernumber = orderno.get(i);
+			// orderlistbyorderno =
+			 model.addObject("orderlistbyorderno",  orderlist);//orderService.findByOrderNumber(orderno.get(i)));
+			 model.setViewName("demoorder");
+		}
+		
+		
+	//	model.addObject("mode","MODE_HISTORY");
+		model.setViewName("demoorder");
+		return model;
+	}
+	@GetMapping("/searchbyhotelnameoritem")
+	public String searchHotel(@RequestParam String hotelname, HttpServletRequest request) {
+		List<Hotel> h = hotelService.findAllByHotelname(hotelname);
+		List<Items> i = itemsService.findAllByItems(hotelname);
+		if (h.size() != 0) {
+			request.setAttribute("hotels", hotelService.findAllByHotelname(hotelname));
+			return "searchhotel";
+		} else if (i.size() != 0) {
+			request.setAttribute("items", itemsService.findAllByItems(hotelname));
+			return "searchitem";
+		} else {
+			return "searcherror";
+		}
+	}
+	@GetMapping("/getHotelByHotelNo")
+	public String getHotelsByHno(@RequestParam int hno, HttpServletRequest request) {
+		Hotel h = hotelService.findByHno(hno);
+		request.setAttribute("hotel", h);
+		return "searchhotelbyhotelno";
+
+	}
+	@GetMapping("/diplayOffers")
+	public ModelAndView showOffers() {
+		model.setViewName("showOffers");
+		return model;
+	}
+	}

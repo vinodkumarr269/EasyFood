@@ -13,7 +13,7 @@ import com.example.model.Customer;
 import com.example.repository.CustomerRepository;
 
 @Service
-@Transactional
+
 public class CustomerService {
 
 	public final CustomerRepository customerRepository;
@@ -72,7 +72,7 @@ public class CustomerService {
 		return customerRepository.findByUsernameAndPassword(username, password);
 	}
 
-	public Customer findByUsername(String username) {
+	public  Customer findByUsername(String username) {
 		return customerRepository.findByUsername(username);
 	}
 
@@ -80,4 +80,9 @@ public class CustomerService {
 		customerRepository.deleteAll();
 	}
 
+	public void updatePasswordOfUser(String updatepassword, String username) {
+   // customerRepository.updateCustomerPassword(updatepassword,username);
+	}
+
+	
 }
